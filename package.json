@@ -1,0 +1,29 @@
+{
+  "name": "kafullstackopenpart4",
+  "version": "1.0.0",
+  "description": "This is the project for part 4 of the FullStackOpen course by university of helsinki.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NEWHELL69/KAFullStackOpenPart4.git"
+  },
+  "author": "Kushagra Agarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NEWHELL69/KAFullStackOpenPart4/issues"
+  },
+  "homepage": "https://github.com/NEWHELL69/KAFullStackOpenPart4#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+} 

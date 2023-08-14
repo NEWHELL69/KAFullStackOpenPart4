@@ -1,0 +1,6 @@
+# .gitignore file should be in the root directory of the project. Reasons:
+#   1. .DS_Store pops up everywhere
+
+.DS_Store
+node_modules
+.env
