@@ -1,0 +1,44 @@
+[
+    {
+      "title": "Exploring Algorithms",
+      "author": "Grace Hopper",
+      "url": "http://www.cs.yale.edu/homes/hoppe/exploring-algorithms.pdf",
+      "likes": 8
+    },
+    {
+      "title": "Data Structures Demystified",
+      "author": "Ada Lovelace",
+      "url": "http://www.cs.yale.edu/homes/lovelace/data-structures-demystified.pdf",
+      "likes": 14
+    },
+    {
+      "title": "Paradigms of Programming",
+      "author": "Alan Turing",
+      "url": "http://www.cs.yale.edu/homes/turing/paradigms-of-programming.pdf",
+      "likes": 6
+    },
+    {
+      "title": "Evolution of Software Design",
+      "author": "Margaret Hamilton",
+      "url": "http://www.cs.yale.edu/homes/hamilton/evolution-of-software-design.pdf",
+      "likes": 18
+    },
+    {
+      "title": "Innovative CS Education",
+      "author": "John Backus",
+      "url": "http://www.cs.yale.edu/homes/backus/innovative-cs-education.pdf",
+      "likes": 5
+    },
+    {
+      "title": "Algorithms and Problem Solving",
+      "author": "Donald Knuth",
+      "url": "http://www.cs.yale.edu/homes/knuth/algorithms-problem-solving.pdf",
+      "likes": 12
+    },
+    {
+      "title": "Functional Programming Principles",
+      "author": "Haskell Curry",
+      "url": "http://www.cs.yale.edu/homes/curry/functional-programming-principles.pdf",
+      "likes": 9
+    }
+]

@@ -1,9 +1,9 @@
-POST http://localhost:3003/api/blogs HTTP/2
+PUT http://localhost:3001/api/blogs/12 HTTP/2
 content-type: application/json
 
 {
-    "title": "Govt to incubate 'Aatmanirbhar' web browsers that compete with Google Chrome, Mozilla Firefox",
-    "author": "DEEPSEKHAR CHOUDHURY",
-    "url": "https://www.moneycontrol.com/news/business/govt-to-incubate-aatmanirbharta-web-browsers-that-compete-with-google-chrome-mozilla-firefox-11134911.html",
-    "likes": 0
+    "likes": 8
 }
+
+###
+GET http://localhost:3001/api/blogs HTTP/2 
