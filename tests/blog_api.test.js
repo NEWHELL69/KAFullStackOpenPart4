@@ -12,7 +12,9 @@ beforeEach(async () => {
   await Blog.insertMany(initialBlogs);
 }, 10000);
 
+// Describe function helps defining or describing the initial state of the database.
 describe('when there is initially some notes saved', () => {
+  // Test function helps with testing a specific operation in that state.
   test('blogs are returned as json and blog count recieved correctly', async () => {
     api.get('/api/blogs')
       .expect(200)

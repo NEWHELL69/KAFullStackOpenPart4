@@ -1,5 +1,6 @@
 const listHelper = require('../utils/list_helper');
 
+// Describe function helps defining or describing the initial state of the database.
 describe('total likes', () => {
   const blogList0 = [
     {
@@ -44,6 +45,7 @@ describe('total likes', () => {
     },
   ];
 
+  // Test function helps with testing a specific operation in that state.
   test('when list has 5 random blogs', () => {
     const result = listHelper.totalLikes(blogList0);
     expect(result).toBe(51);

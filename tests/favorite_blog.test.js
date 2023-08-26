@@ -1,5 +1,6 @@
 const listHelper = require('../utils/list_helper');
 
+// Describe function helps defining or describing the initial state of the database.
 describe('favorite blog', () => {
   const blogList0 = [
     {
@@ -44,6 +45,7 @@ describe('favorite blog', () => {
     },
   ];
 
+  // Test function helps with testing a specific operation in that state.
   test('when list has 5 random blogs', () => {
     const result = listHelper.favoriteBlog(blogList0);
 
