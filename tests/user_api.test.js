@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const bcrypt = require('bcrypt');
 const supertest = require('supertest');
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const helper = require('./test_helper');
 const app = require('../app');
@@ -60,5 +61,37 @@ describe('when there is initially one user in db', () => {
 
     const usersAtEnd = await helper.usersInDb();
     expect(usersAtEnd).toEqual(usersAtStart);
+  });
+
+  test('creation fails with proper statuscode and message if username and password are in invalid format', async () => {
+    const userWithInvalidUsername = {
+      username: 'ro',
+      name: 'Superuser',
+      password: 'salainen',
+    };
+
+    const userWithInvalidPassword = {
+      username: 'root',
+      name: 'Superuser',
+      password: undefined,
+    };
+
+    let response = await api
+      .post('/api/users')
+      .send(userWithInvalidUsername)
+      .expect(400);
+
+    expect(response.body.error).toContain('Both username and password must be at least 3 characters long.');
+
+    response = await api
+      .post('/api/users')
+      .send(userWithInvalidPassword)
+      .expect(400);
+
+    expect(response.body.error).toContain('Both username and password must be at least 3 characters long.');
+  });
+
+  afterAll(async () => {
+    await mongoose.connection.close();
   });
 });
