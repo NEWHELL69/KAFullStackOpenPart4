@@ -1,44 +1,122 @@
 [
-    {
-      "title": "Exploring Algorithms",
-      "author": "Grace Hopper",
-      "url": "http://www.cs.yale.edu/homes/hoppe/exploring-algorithms.pdf",
-      "likes": 8
-    },
-    {
-      "title": "Data Structures Demystified",
-      "author": "Ada Lovelace",
-      "url": "http://www.cs.yale.edu/homes/lovelace/data-structures-demystified.pdf",
-      "likes": 14
-    },
-    {
-      "title": "Paradigms of Programming",
-      "author": "Alan Turing",
-      "url": "http://www.cs.yale.edu/homes/turing/paradigms-of-programming.pdf",
-      "likes": 6
-    },
-    {
-      "title": "Evolution of Software Design",
-      "author": "Margaret Hamilton",
-      "url": "http://www.cs.yale.edu/homes/hamilton/evolution-of-software-design.pdf",
-      "likes": 18
-    },
-    {
-      "title": "Innovative CS Education",
-      "author": "John Backus",
-      "url": "http://www.cs.yale.edu/homes/backus/innovative-cs-education.pdf",
-      "likes": 5
-    },
-    {
-      "title": "Algorithms and Problem Solving",
-      "author": "Donald Knuth",
-      "url": "http://www.cs.yale.edu/homes/knuth/algorithms-problem-solving.pdf",
-      "likes": 12
-    },
-    {
-      "title": "Functional Programming Principles",
-      "author": "Haskell Curry",
-      "url": "http://www.cs.yale.edu/homes/curry/functional-programming-principles.pdf",
-      "likes": 9
-    }
+  {
+    "title": "Exploring Algorithms",
+    "author": "Grace Hopper",
+    "url": "http://www.cs.yale.edu/homes/hoppe/exploring-algorithms.pdf",
+    "likes": 8
+  },
+  {
+    "title": "Algorithms Unveiled",
+    "author": "Alan Turing",
+    "url": "http://www.example.com/unveiled-algorithms.pdf",
+    "likes": 20
+  },
+  {
+    "title": "Journey through Algorithmic Landscapes",
+    "author": "Margaret Hamilton",
+    "url": "http://www.example.com/algorithmic-landscapes.pdf",
+    "likes": 15
+  },
+  {
+    "title": "Mastering Algorithmic Artistry",
+    "author": "Donald Knuth",
+    "url": "http://www.example.com/algorithmic-artistry.pdf",
+    "likes": 50
+  },
+  {
+    "title": "Algorithmic Wonders",
+    "author": "Ada Lovelace",
+    "url": "http://www.example.com/algorithmic-wonders.pdf",
+    "likes": 30
+  },
+  {
+    "title": "Unraveling Algorithmic Mysteries",
+    "author": "John von Neumann",
+    "url": "http://www.example.com/unraveling-mysteries.pdf",
+    "likes": 25
+  },
+  {
+    "title": "Algorithms Explored",
+    "author": "Barbara Liskov",
+    "url": "http://www.example.com/algorithms-explored.pdf",
+    "likes": 40
+  },
+  {
+    "title": "Algorithmic Evolution",
+    "author": "Rosalind Picard",
+    "url": "http://www.example.com/algorithmic-evolution.pdf",
+    "likes": 12
+  },
+  {
+    "title": "Algorithmic Pioneers",
+    "author": "Dijkstra",
+    "url": "http://www.example.com/algorithmic-pioneers.pdf",
+    "likes": 18
+  },
+  {
+    "title": "Algorithms in Motion",
+    "author": "Gottfried Leibniz",
+    "url": "http://www.example.com/algorithms-in-motion.pdf",
+    "likes": 10
+  },
+  {
+    "title": "Algorithmic Insights",
+    "author": "Alan Turing",
+    "url": "http://www.example.com/algorithmic-insights.pdf",
+    "likes": 22
+  },
+  {
+    "title": "Decoding Algorithms",
+    "author": "Grace Hopper",
+    "url": "http://www.example.com/decoding-algorithms.pdf",
+    "likes": 35
+  },
+  {
+    "title": "Algorithmic Reflections",
+    "author": "Donald Knuth",
+    "url": "http://www.example.com/algorithmic-reflections.pdf",
+    "likes": 28
+  },
+  {
+    "title": "Algorithms Explored",
+    "author": "Margaret Hamilton",
+    "url": "http://www.example.com/algorithms-journey.pdf",
+    "likes": 17
+  },
+  {
+    "title": "Algorithmic Harmony",
+    "author": "Ada Lovelace",
+    "url": "http://www.example.com/algorithmic-harmony.pdf",
+    "likes": 23
+  },
+  {
+    "title": "Algorithmic Unveiling",
+    "author": "John von Neumann",
+    "url": "http://www.example.com/unveiling-algorithms.pdf",
+    "likes": 16
+  },
+  {
+    "title": "Algorithmic Explorations",
+    "author": "Barbara Liskov",
+    "url": "http://www.example.com/explorations.pdf",
+    "likes": 31
+  },
+  {
+    "title": "Algorithmic Creativity",
+    "author": "Rosalind Picard",
+    "url": "http://www.example.com/algorithmic-creativity.pdf",
+    "likes": 19
+  },
+  {
+    "title": "Algorithmic Odyssey",
+    "author": "Dijkstra",
+    "url": "http://www.example.com/algorithmic-odyssey.pdf",
+    "likes": 21
+  },
+  {
+    "title": "Algorithmic Serenity",
+    "author": "Gottfried Leibniz",
+    "url": "http://www.example.com/serenity-algorithms.pdf",
+    "likes": 14
+  }
 ]

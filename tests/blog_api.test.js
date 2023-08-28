@@ -4,16 +4,32 @@ const mongoose = require('mongoose');
 const app = require('../app');
 const Blog = require('../models/blog');
 const initialBlogs = require('./initial_blogs.json');
+const User = require('../models/user');
+const initialUsers = require('./initial_users.json');
+// const testHelper = require('./test_helper');
 
 const api = supertest(app);
 
-beforeEach(async () => {
+const newBlog = {
+  // id: testHelper.createObjectId(),
+  title: 'Algorithmic Visions',
+  author: 'Niklaus Wirth',
+  url: 'http://www.example.com/algorithmic-visions.pdf',
+  likes: 75,
+};
+
+beforeAll(async () => {
+  await User.deleteMany({});
+  let promiseArray = initialUsers.map((user) => api.post('/api/users').send(user));
+  await Promise.all(promiseArray);
+
   await Blog.deleteMany({});
-  await Blog.insertMany(initialBlogs);
+  promiseArray = initialBlogs.map((blog) => api.post('/api/blogs').send(blog));
+  await Promise.all(promiseArray);
 }, 10000);
 
 // Describe function helps defining or describing the initial state of the database.
-describe('when there is initially some notes saved', () => {
+describe('when there is initially some blogs and users saved', () => {
   // Test function helps with testing a specific operation in that state.
   test('blogs are returned as json and blog count recieved correctly', async () => {
     api.get('/api/blogs')
@@ -28,12 +44,10 @@ describe('when there is initially some notes saved', () => {
     response.body.forEach((blog) => {
       expect(blog.id).toBeDefined();
     });
-  }, 10000);
-});
+  });
 
-describe('blog posting related', () => {
   test('New blog is posted correctly', async () => {
-    const blogToBeCreated = initialBlogs[0];
+    const blogToBeCreated = newBlog;
 
     const response = await api
       .post('/api/blogs')
@@ -45,20 +59,18 @@ describe('blog posting related', () => {
 
     const blogs = await api.get('/api/blogs');
     const blogGot = blogs.body.find((blog) => blog.id === blogCreated.id);
+    // When we get blogs(in JSON format) from '/api/blogs' then the userId field is populated
+    // user object. But userId field in response from post request above have id saved in userId
+    // So the line below replaces userId object with its id.
+    blogGot.userId = blogGot.userId.id;
 
     expect(blogs.body.length).toBe(initialBlogs.length + 1);
-    expect(blogGot.title).toBe(blogToBeCreated.title);
-    expect(blogGot.author).toBe(blogToBeCreated.author);
-    expect(blogGot.url).toBe(blogToBeCreated.url);
-    expect(blogGot.likes).toBe(blogToBeCreated.likes);
+    expect(blogGot).toStrictEqual(blogCreated);
   });
 
   test('Missing like property defaults to 0', async () => {
-    const blogToBeCreated = {
-      title: initialBlogs[0].title,
-      author: initialBlogs[0].author,
-      url: initialBlogs[0].url,
-    };
+    const blogToBeCreated = { ...newBlog };
+    delete blogToBeCreated.likes;
 
     const response = await api
       .post('/api/blogs')
@@ -70,13 +82,11 @@ describe('blog posting related', () => {
 
     expect(blogCreated.likes).toBe(0);
   });
-});
 
-describe('Missing fields', () => {
   test('Bad request check ok', async () => {
     const blogWithMissingTitle = {
-      author: initialBlogs[0].author,
-      url: initialBlogs[0].url,
+      author: newBlog.author,
+      url: newBlog.url,
     };
 
     await api
@@ -85,8 +95,8 @@ describe('Missing fields', () => {
       .expect(400);
 
     const blogWithMissingURL = {
-      title: initialBlogs[0].title,
-      author: initialBlogs[0].author,
+      title: newBlog.title,
+      author: newBlog.author,
     };
 
     await api
@@ -94,9 +104,7 @@ describe('Missing fields', () => {
       .send(blogWithMissingURL)
       .expect(400);
   });
-});
 
-describe('Blogs modification', () => {
   test('Blog deletion check', async () => {
     let blogs = await api.get('/api/blogs');
 
@@ -123,7 +131,17 @@ describe('Blogs modification', () => {
     expect(upatedBlog.likes).toBe(whatToUpdate.likes);
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
+  // Test case for Exercise 4.17
+  test('GET blogs are populated with user object', async () => {
+    const response = await api.get('/api/blogs');
+    const blogs = response.body;
+
+    blogs.forEach((blog) => {
+      expect(blog.userId.id).toBeDefined();
+    });
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });

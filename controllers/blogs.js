@@ -1,13 +1,15 @@
 const blogRouter = require('express').Router();
+const { default: mongoose } = require('mongoose');
 const Blog = require('../models/blog');
+const User = require('../models/user');
 
 blogRouter.get('/', async (request, response) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate('userId');
 
   response.json(blogs);
 });
 
-blogRouter.post('/', (request, response) => {
+blogRouter.post('/', async (request, response) => {
   const { body } = request;
 
   if (!body.title || !body.url) {
@@ -17,6 +19,16 @@ blogRouter.post('/', (request, response) => {
 
     return;
   }
+
+  body.id = (new mongoose.Types.ObjectId()).toString();
+
+  // Adding a random user to this blog as per Excersise 4.17
+  const users = await User.find({}); // Getting all users
+  const randomUser = users[Math.floor(Math.random() * users.length)]; // Selecting a random user
+  body.userId = randomUser.id; // Assigning user to blog
+  randomUser.blogs.push(body.id); // Assigning blog to user
+  await User.findByIdAndUpdate(randomUser.id, randomUser); // Updating the user in DB
+  // -----------------------------------------------------------------------------
 
   const blog = new Blog(body);
 

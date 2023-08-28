@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const bcrypt = require('bcrypt');
 const supertest = require('supertest');
 const mongoose = require('mongoose');
@@ -8,17 +7,17 @@ const app = require('../app');
 
 const api = supertest(app);
 
+beforeAll(async () => {
+  await User.deleteMany({});
+
+  const passwordHash = await bcrypt.hash('sekret', 10);
+  const user = new User({ username: 'root', passwordHash });
+
+  await user.save();
+});
+
 // Describe function helps defining or describing the initial state of the database.
 describe('when there is initially one user in db', () => {
-  beforeEach(async () => {
-    await User.deleteMany({});
-
-    const passwordHash = await bcrypt.hash('sekret', 10);
-    const user = new User({ username: 'root', passwordHash });
-
-    await user.save();
-  });
-
   // Test function helps with testing a specific operation in that state.
   test('creation succeeds with a fresh username', async () => {
     const usersAtStart = await helper.usersInDb();
@@ -89,6 +88,24 @@ describe('when there is initially one user in db', () => {
       .expect(400);
 
     expect(response.body.error).toContain('Both username and password must be at least 3 characters long.');
+  });
+
+  // Test case for Exercise 4.17
+  test('GET users are populated with blog object', async () => {
+    let response = await api.post('/api/blogs').send({
+      title: 'Algorithm to live by',
+      author: 'some youtuber',
+      url: 'http://www.example.com/',
+      likes: 10,
+    });
+    const blogCreated = response.body;
+
+    response = await api.get('/api/users');
+    const users = response.body;
+
+    const blogSavedByUser = users.find((user) => user.id === blogCreated.userId);
+
+    expect(blogSavedByUser.blogs.length).toBe(1);
   });
 
   afterAll(async () => {
