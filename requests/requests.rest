@@ -1,3 +1,14 @@
+###
+POST http://localhost:3001/api/users HTTP/2
+content-type: application/json
+
+{
+    "name": "Kushagra",
+    "username": "Kushagra9839",
+    "password": "KUsh1234"
+}
+
+###
 POST http://localhost:3001/api/login HTTP/2
 content-type: application/json
 
@@ -7,11 +18,17 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3001/api/users HTTP/2
+POST http://localhost:3001/api/blogs HTTP/2
 content-type: application/json
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1c2hhZ3JhMDMwNCIsImlkIjoiNjRmMTU2YTVlZmMxNTA4YjA4ZWY0Y2VlIiwiaWF0IjoxNjkzNTQ3MzIzfQ.79WGxHg3JjT24PP_hbVAdRlffu86KFdd1DeYVFIsvYA
 
 {
-    "name": "Kushagra",
-    "username": "Kushagra0304",
-    "password": "KUsh1234"
+    "title": "Masterin Artistry",
+    "author": "Donauth",
+    "url": "http://www.example.com/algorithmic-artistry.pdf",
+    "likes": 70
 }
+
+###
+DELETE  http://localhost:3001/api/blogs/64f17b4d9b2feb259bb34860 HTTP/2
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikt1c2hhZ3JhMDMwNCIsImlkIjoiNjRmMTU2YTVlZmMxNTA4YjA4ZWY0Y2VlIiwiaWF0IjoxNjkzNTQ3MzIzfQ.79WGxHg3JjT24PP_hbVAdRlffu86KFdd1DeYVFIsvYA
