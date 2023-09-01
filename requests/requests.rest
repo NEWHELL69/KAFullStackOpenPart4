@@ -1,9 +1,17 @@
-PUT http://localhost:3001/api/blogs/12 HTTP/2
+POST http://localhost:3001/api/login HTTP/2
 content-type: application/json
 
 {
-    "likes": 8
+    "username": "Kushagra0304",
+    "password": "KUsh1234"
 }
 
 ###
-GET http://localhost:3001/api/blogs HTTP/2 
+POST http://localhost:3001/api/users HTTP/2
+content-type: application/json
+
+{
+    "name": "Kushagra",
+    "username": "Kushagra0304",
+    "password": "KUsh1234"
+}

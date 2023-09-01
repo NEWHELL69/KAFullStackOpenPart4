@@ -9,8 +9,17 @@ blogRouter.get('/', async (request, response) => {
   response.json(blogs);
 });
 
-blogRouter.post('/', async (request, response) => {
-  const { body } = request;
+// Adding a random user to a blog as per Excersise 4.17
+const assignRandomUser = async (request, response, next) => {
+  const usersCount = await User.countDocuments();
+  const randomIndex = Math.floor(Math.random() * usersCount);
+  const randomUser = await User.findOne().skip(randomIndex);
+  request.randomUser = randomUser;
+  next();
+};
+
+blogRouter.post('/', assignRandomUser, async (request, response) => {
+  const { body, randomUser } = request;
 
   if (!body.title || !body.url) {
     response.status(400).json({
@@ -20,23 +29,20 @@ blogRouter.post('/', async (request, response) => {
     return;
   }
 
-  body.id = (new mongoose.Types.ObjectId()).toString();
+  const blogData = {
+    ...body,
+    id: (new mongoose.Types.ObjectId()).toString(),
+    userId: randomUser.id, // Assigning user to blog
+  };
 
-  // Adding a random user to this blog as per Excersise 4.17
-  const users = await User.find({}); // Getting all users
-  const randomUser = users[Math.floor(Math.random() * users.length)]; // Selecting a random user
-  body.userId = randomUser.id; // Assigning user to blog
-  randomUser.blogs.push(body.id); // Assigning blog to user
-  await User.findByIdAndUpdate(randomUser.id, randomUser); // Updating the user in DB
-  // -----------------------------------------------------------------------------
+  const blog = new Blog(blogData);
+  await blog.save();
 
-  const blog = new Blog(body);
+  // Update user with the new blog post
+  randomUser.blogs.push(blog.id); // Assigning blog to user
+  await randomUser.save();
 
-  blog
-    .save()
-    .then((result) => {
-      response.status(201).json(result);
-    });
+  response.status(201).json(blog);
 });
 
 blogRouter.delete('/:id', async (request, response) => {
