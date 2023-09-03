@@ -11,21 +11,37 @@ const initialUsers = require('./initial_users.json');
 const api = supertest(app);
 
 const newBlog = {
-  // id: testHelper.createObjectId(),
   title: 'Algorithmic Visions',
   author: 'Niklaus Wirth',
   url: 'http://www.example.com/algorithmic-visions.pdf',
   likes: 75,
 };
 
+let userTokens = [];
+
+const initializeTokens = async () => {
+  const tokenPromiseArray = initialUsers.map((user) => (
+    api.post('/api/login').send({ username: user.username, password: user.password })
+  ));
+  userTokens = await Promise.all(tokenPromiseArray);
+  userTokens = userTokens.map((userToken) => userToken.body);
+};
+
+const randomToken = () => userTokens[Math.floor(Math.random() * userTokens.length)].token;
+
+const getTokenForUser = (user) => (userTokens.find(
+  (userToken) => userToken.username === user.username,
+)).token;
+
 beforeAll(async () => {
   await User.deleteMany({});
-  let promiseArray = initialUsers.map((user) => api.post('/api/users').send(user));
-  await Promise.all(promiseArray);
+  await Promise.all(initialUsers.map((user) => api.post('/api/users').send(user)));
+
+  await initializeTokens();
 
   await Blog.deleteMany({});
-  promiseArray = initialBlogs.map((blog) => api.post('/api/blogs').send(blog));
-  await Promise.all(promiseArray);
+  const blogPromiseArray = initialBlogs.map((blog) => api.post('/api/blogs').set('authorization', `Bearer ${randomToken()}`).send(blog));
+  await Promise.all(blogPromiseArray);
 }, 10000);
 
 // Describe function helps defining or describing the initial state of the database.
@@ -51,6 +67,7 @@ describe('when there is initially some blogs and users saved', () => {
 
     const response = await api
       .post('/api/blogs')
+      .set('authorization', `Bearer ${randomToken()}`)
       .send(blogToBeCreated)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -74,6 +91,7 @@ describe('when there is initially some blogs and users saved', () => {
 
     const response = await api
       .post('/api/blogs')
+      .set('authorization', `Bearer ${randomToken()}`)
       .send(blogToBeCreated)
       .expect(201)
       .expect('Content-Type', /application\/json/);
@@ -91,6 +109,7 @@ describe('when there is initially some blogs and users saved', () => {
 
     await api
       .post('/api/blogs')
+      .set('authorization', `Bearer ${randomToken()}`)
       .send(blogWithMissingTitle)
       .expect(400);
 
@@ -101,6 +120,7 @@ describe('when there is initially some blogs and users saved', () => {
 
     await api
       .post('/api/blogs')
+      .set('authorization', `Bearer ${randomToken()}`)
       .send(blogWithMissingURL)
       .expect(400);
   });
@@ -112,6 +132,7 @@ describe('when there is initially some blogs and users saved', () => {
 
     await api
       .delete(`/api/blogs/${toBeDeletedBlog.id}`)
+      .set('authorization', `Bearer ${getTokenForUser(toBeDeletedBlog.userId)}`)
       .expect(204);
 
     blogs = await api.get('/api/blogs');
@@ -126,7 +147,11 @@ describe('when there is initially some blogs and users saved', () => {
 
     const blogToUpdate = blogs[0];
 
-    const upatedBlog = (await api.put(`/api/blogs/${blogToUpdate.id}`).send(whatToUpdate)).body;
+    const upatedBlog = (
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .set('authorization', `Bearer ${getTokenForUser(blogToUpdate.userId)}`)
+        .send(whatToUpdate)).body;
 
     expect(upatedBlog.likes).toBe(whatToUpdate.likes);
   });

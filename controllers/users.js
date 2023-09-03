@@ -4,7 +4,9 @@ const usersRouter = require('express').Router();
 const User = require('../models/user');
 
 usersRouter.post('/', async (request, response) => {
-  const { username, name, password } = request.body;
+  const {
+    username, name, password, blogs,
+  } = request.body;
 
   if (!(password && username && /...+/.test(password) && /...+/.test(username))) {
     response.status(400).json({
@@ -19,6 +21,7 @@ usersRouter.post('/', async (request, response) => {
     username,
     name,
     passwordHash,
+    blogs,
   });
 
   const savedUser = await user.save();

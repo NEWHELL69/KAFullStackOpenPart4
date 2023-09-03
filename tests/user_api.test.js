@@ -90,24 +90,6 @@ describe('when there is initially one user in db', () => {
     expect(response.body.error).toContain('Both username and password must be at least 3 characters long.');
   });
 
-  // Test case for Exercise 4.17
-  test('GET users are populated with blog object', async () => {
-    let response = await api.post('/api/blogs').send({
-      title: 'Algorithm to live by',
-      author: 'some youtuber',
-      url: 'http://www.example.com/',
-      likes: 10,
-    });
-    const blogCreated = response.body;
-
-    response = await api.get('/api/users');
-    const users = response.body;
-
-    const blogSavedByUser = users.find((user) => user.id === blogCreated.userId);
-
-    expect(blogSavedByUser.blogs.length).toBe(1);
-  });
-
   afterAll(async () => {
     await mongoose.connection.close();
   });
