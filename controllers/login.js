@@ -17,6 +17,7 @@ loginRouter.post('/', async (request, response) => {
     });
   }
 
+  // Why are we assigning id to user._id ?
   const userForToken = {
     username: user.username,
     id: user._id,

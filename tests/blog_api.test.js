@@ -6,7 +6,6 @@ const Blog = require('../models/blog');
 const initialBlogs = require('./initial_blogs.json');
 const User = require('../models/user');
 const initialUsers = require('./initial_users.json');
-// const testHelper = require('./test_helper');
 
 const api = supertest(app);
 

@@ -12,7 +12,6 @@ beforeAll(async () => {
 
   const passwordHash = await bcrypt.hash('sekret', 10);
   const user = new User({ username: 'root', passwordHash });
-
   await user.save();
 });
 
@@ -88,6 +87,16 @@ describe('when there is initially one user in db', () => {
       .expect(400);
 
     expect(response.body.error).toContain('Both username and password must be at least 3 characters long.');
+  });
+
+  test('Single user get ok', async () => {
+    const { token } = (
+      await api.post('/api/login').send({ username: 'root', password: 'sekret' })).body;
+
+    const response = await api.get('/api/users/singleUser')
+      .set('authorization', `Bearer ${token}`);
+
+    expect(response.body.id).toBeDefined();
   });
 
   afterAll(async () => {

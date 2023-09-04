@@ -2,6 +2,7 @@
 const bcrypt = require('bcrypt');
 const usersRouter = require('express').Router();
 const User = require('../models/user');
+const middleware = require('../utils/middleware');
 
 usersRouter.post('/', async (request, response) => {
   const {
@@ -27,6 +28,11 @@ usersRouter.post('/', async (request, response) => {
   const savedUser = await user.save();
 
   response.status(201).json(savedUser);
+});
+
+usersRouter.get('/singleUser', middleware.userExtractor, async (request, response) => {
+  const users = await User.findById(request.user.id).populate('blogs');
+  response.json(users);
 });
 
 usersRouter.get('/', async (request, response) => {

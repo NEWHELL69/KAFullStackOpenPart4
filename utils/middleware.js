@@ -21,9 +21,7 @@ const errorHandler = (error, request, response, next) => {
   } if (error.name === 'JsonWebTokenError') {
     return response.status(401).json({ error: error.message });
   } if (error.name === 'TokenExpiredError') {
-    return response.status(401).json({
-      error: 'token expired',
-    });
+    return response.status(401).json({ error: 'token expired' });
   }
 
   next(error);
@@ -35,6 +33,7 @@ const unknownEndpoint = (request, response) => {
 
 const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization');
+
   if (authorization && authorization.startsWith('Bearer ')) {
     request.token = authorization.replace('Bearer ', '');
   }
