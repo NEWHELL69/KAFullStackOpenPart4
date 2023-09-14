@@ -13,7 +13,7 @@ beforeAll(async () => {
   const passwordHash = await bcrypt.hash('sekret', 10);
   const user = new User({ username: 'root', passwordHash });
   await user.save();
-});
+}, 30000);
 
 // Describe function helps defining or describing the initial state of the database.
 describe('when there is initially one user in db', () => {

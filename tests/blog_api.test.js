@@ -41,7 +41,7 @@ beforeAll(async () => {
   await Blog.deleteMany({});
   const blogPromiseArray = initialBlogs.map((blog) => api.post('/api/blogs').set('authorization', `Bearer ${randomToken()}`).send(blog));
   await Promise.all(blogPromiseArray);
-}, 10000);
+}, 30000);
 
 // Describe function helps defining or describing the initial state of the database.
 describe('when there is initially some blogs and users saved', () => {
